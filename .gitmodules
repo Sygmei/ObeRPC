@@ -1,0 +1,3 @@
+[submodule "ObEngine"]
+	path = ObEngine
+	url = https://github.com/ObEngine/ObEngine

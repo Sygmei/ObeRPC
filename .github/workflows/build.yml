@@ -1,0 +1,35 @@
+name: Build ÖbEngine plugin
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build_linux:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Compile ÖbEngine plugin
+      uses: ObEngine/BuildPluginAction@v1
+      with:
+        obengineVersion: "8538ba7c2a61c0579e4a872943d7eddd7e9a830f"
+        releaseAs: false
+
+  build_macos:
+    runs-on: macos-latest
+    steps:
+    - name: Compile ÖbEngine plugin
+      uses: ObEngine/BuildPluginAction@v1
+      with:
+        obengineVersion: "8538ba7c2a61c0579e4a872943d7eddd7e9a830f"
+        releaseAs: false
+
+  build_windows:
+    runs-on: windows-latest
+    steps:
+    - name: Compile ÖbEngine plugin
+      uses: ObEngine/BuildPluginAction@v1
+      with:
+        obengineVersion: "8538ba7c2a61c0579e4a872943d7eddd7e9a830f"
+        releaseAs: false
