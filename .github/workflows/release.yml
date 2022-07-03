@@ -1,0 +1,66 @@
+name: Release ÖbEngine plugin
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  release_linux:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Compile ÖbEngine plugin
+      id: compile_plugin
+      uses: ObEngine/BuildPluginAction@v3
+      with:
+        obengineVersion: "v0.5"
+        releaseAs: false
+    - name: Upload Release Asset
+      id: upload-release-asset-linux
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ${{ steps.compile_plugin.outputs.pluginLocation }}
+        asset_name: sampleplugin.linux64.so
+        asset_content_type: application/bin
+
+  release_macos:
+    runs-on: macos-latest
+    steps:
+    - name: Compile ÖbEngine plugin
+      id: compile_plugin
+      uses: ObEngine/BuildPluginAction@v3
+      with:
+        obengineVersion: "v0.5"
+        releaseAs: false
+    - name: Upload Release Asset
+      id: upload-release-asset-macos
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ${{ steps.compile_plugin.outputs.pluginLocation }}
+        asset_name: sampleplugin.macos64.dylib
+        asset_content_type: application/bin
+
+  release_windows:
+    runs-on: windows-latest
+    steps:
+    - name: Compile ÖbEngine plugin
+      id: compile_plugin
+      uses: ObEngine/BuildPluginAction@v3
+      with:
+        obengineVersion: "v0.5"
+        releaseAs: false
+    - name: Upload Release Asset
+      id: upload-release-asset-win
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ github.event.release.upload_url }}
+        asset_path: ${{ steps.compile_plugin.outputs.pluginLocation }}
+        asset_name: sampleplugin.win64.dll
+        asset_content_type: application/bin
