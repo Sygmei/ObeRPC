@@ -11,25 +11,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Compile ÖbEngine plugin
-      uses: ObEngine/BuildPluginAction@v2
+      uses: ObEngine/BuildPluginAction@v3
       with:
-        obengineVersion: "8538ba7c2a61c0579e4a872943d7eddd7e9a830f"
+        obengineVersion: "v0.5"
         releaseAs: false
 
   build_macos:
     runs-on: macos-latest
     steps:
     - name: Compile ÖbEngine plugin
-      uses: ObEngine/BuildPluginAction@v2
+      uses: ObEngine/BuildPluginAction@v3
       with:
-        obengineVersion: "8538ba7c2a61c0579e4a872943d7eddd7e9a830f"
+        obengineVersion: "v0.5"
         releaseAs: false
 
   build_windows:
     runs-on: windows-latest
     steps:
     - name: Compile ÖbEngine plugin
-      uses: ObEngine/BuildPluginAction@v2
+      uses: ObEngine/BuildPluginAction@v3
       with:
-        obengineVersion: "8538ba7c2a61c0579e4a872943d7eddd7e9a830f"
+        obengineVersion: "v0.5"
         releaseAs: false
