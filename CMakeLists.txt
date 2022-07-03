@@ -2,11 +2,12 @@ cmake_minimum_required(VERSION 3.21)
 
 project(oberpc)
 
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+
 file(GLOB_RECURSE OBERPC_HEADERS CONFIGURE_DEPENDS "${PROJECT_SOURCE_DIR}/include/*.hpp")
 file(GLOB_RECURSE OBERPC_SOURCES CONFIGURE_DEPENDS "${PROJECT_SOURCE_DIR}/src/*.cpp")
 
 add_library(oberpc SHARED ${OBERPC_HEADERS} ${OBERPC_SOURCES})
-set_property(TARGET oberpc PROPERTY POSITION_INDEPENDENT_CODE ON)
 
 target_include_directories(oberpc
     PRIVATE
