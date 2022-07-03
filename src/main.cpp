@@ -33,7 +33,7 @@ sol::lua_value LuaRpcClient::call(const sol::table& content)
         return decoded_content_res.get<sol::table>();
     }
     else {
-        return sol::nil;
+        return sol::lua_nil;
     }
 }
 
