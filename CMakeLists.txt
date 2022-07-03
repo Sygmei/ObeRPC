@@ -20,9 +20,9 @@ set(BUILD_TOOLKIT OFF CACHE BOOL "")
 set(BUILD_TESTS OFF CACHE BOOL "")
 
 add_custom_command(
-    TARGET SamplePlugin POST_BUILD
+    TARGET oberpc POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E echo
-    $<TARGET_FILE:SamplePlugin>
+    $<TARGET_FILE:oberpc>
     > plugin_location
 )
 
