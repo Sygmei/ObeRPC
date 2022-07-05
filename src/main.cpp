@@ -14,6 +14,8 @@ private:
 public:
     LuaRpcClient(sol::this_state lua, const std::string& url);
     sol::lua_value call(const sol::table& content);
+    sol::table get(const std::string& path);
+    sol::table post(const std::string& path, const sol::table& payload);
 };
 
 LuaRpcClient::LuaRpcClient(sol::this_state this_state, const std::string& url) : m_client(url)
@@ -37,6 +39,32 @@ sol::lua_value LuaRpcClient::call(const sol::table& content)
     }
 }
 
+sol::table LuaRpcClient::get(const std::string& path)
+{
+    auto res = m_client.Get(path.data());
+    if (res->status == 200) {
+        const sol::protected_function_result decoded_content_res = m_json_module["decode"](res->body);
+        return decoded_content_res.get<sol::table>();
+    }
+    else {
+        return sol::lua_nil;
+    }
+}
+
+sol::table LuaRpcClient::post(const std::string& path, const sol::table& payload)
+{
+    const sol::protected_function_result encoded_content_res = m_json_module["encode"](payload);
+    const std::string json_content = encoded_content_res.get<std::string>();
+    auto res = m_client.Post(path.data(), json_content, "application/json");
+    if (res->status == 200) {
+        const sol::protected_function_result decoded_content_res = m_json_module["decode"](res->body);
+        return decoded_content_res.get<sol::table>();
+    }
+    else {
+        return sol::lua_nil;
+    }
+}
+
 void load_lua_jsonrpc(sol::state_view lua)
 {
     const sol::protected_function_result json_module_res = lua.do_string(rxi_json_lua_source);
@@ -47,6 +75,8 @@ void load_lua_jsonrpc(sol::state_view lua)
         = lua.new_usertype<LuaRpcClient>("jsonrpc",
             sol::call_constructor, sol::constructors<LuaRpcClient(sol::this_state, const std::string&)>());
     bind_jsonrpc[sol::meta_function::call] = &LuaRpcClient::call;
+    bind_jsonrpc["get"] = &LuaRpcClient::get;
+    bind_jsonrpc["post"] = &LuaRpcClient::post;
 }
 
 PLUGIN_FUNC void OnInit(obe::engine::Engine& engine)
